@@ -193,8 +193,8 @@ function playerStats(playerName){
 // First, find the player with the largest shoe size
 // Then, return that player's number of rebounds
 function bigShoeRebounds(){
-  const homeTeamPlayerBiggestShoe = findLargestShoeSize(gameObject()['home']['players'])
-  const awayTeamPlayerBiggestShoe = findLargestShoeSize(gameObject()['away']['players'])
+  const homeTeamPlayerBiggestShoe = findLargestAttribute(gameObject()['home']['players'])
+  const awayTeamPlayerBiggestShoe = findLargestAttribute(gameObject()['away']['players'])
   
   if(homeTeamPlayerBiggestShoe.shoe <= awayTeamPlayerBiggestShoe.shoe){
     return awayTeamPlayerBiggestShoe.rebounds
@@ -203,12 +203,12 @@ function bigShoeRebounds(){
 
 }
 //returns the player obj with the largest shoe size
-function findLargestShoeSize(players){
+function findLargestAttribute(players,attr='shoe'){
   let biggestShoe = 0
   let biggestShoePlayer = {}
   for(const player in players){
-    if(players[player]['shoe'] > biggestShoe){
-      biggestShoe = players[player]['shoe']
+    if(players[player][attr] > biggestShoe){
+      biggestShoe = players[player][attr]
       biggestShoePlayer = players[player]
     }else{
       continue
@@ -272,5 +272,18 @@ function calcPoints(players){
   return totalPoints = arrayPlayers.reduce((acc,currentVal) => acc + currentVal.points, 0)  
 }
 
+//returns player with the longest name
+function playerWithLongestName(){
+  const awayPlayersList = Object.keys(gameObject().away.players)
+  const homePlayersList = Object.keys(gameObject().away.players)
+  const nameLengthAway = awayPlayersList.map(name=> name.length)
+  const nameLengthHome = homePlayersList.map(name=> name.length)
+  const longestNameAway = Math.max(...nameLengthAway)
+  const longestNameHome = Math.max(...nameLengthHome)
 
+  return longestNameAway < longestNameHome ? homePlayersList[nameLengthHome.indexOf(longestNameHome)] : awayPlayersList[nameLengthAway.indexOf(longestNameAway)]
+}
 
+function doesLongNameStealATon(){
+  
+}
