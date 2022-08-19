@@ -235,6 +235,7 @@ function returnPlayerObject(playerName) {
   return {}
 }
 
+//capitalize two words
 function capitalizeEachWord(arrayOfNames) {
   return arrayOfNames.split(" ")
     .map((name) => {
@@ -243,7 +244,33 @@ function capitalizeEachWord(arrayOfNames) {
     })
     .join(" ");
 }
+// returns points most scored
+function mostPointsScored(){
+  const awayTeamPoints = calcPoints(gameObject().away.players)
+  const homeTeamPoints = calcPoints(gameObject().home.players)
+  return awayTeamPoints > homeTeamPoints ? awayTeamPoints : homeTeamPoints
+}
+//team that won
+function winningTeam(){
+  
+  const awayTeamPoints = calcPoints(gameObject().away.players)
+  const homeTeamPoints = calcPoints(gameObject().home.players)
+  
+  if(awayTeamPoints > homeTeamPoints){
+    return `${gameObject().away.teamName} won with ${awayTeamPoints}`
+  }
+  else if(awayTeamPoints < homeTeamPoints){
+    return `${gameObject().home.teamName} won with ${homeTeamPoints}`
+  }
+  return `It was a draw\n ${gameObject().home.teamName} vs ${gameObject().away.teamName}\n\n ${homeTeamPoints}  - ${awayTeamPoints}`
 
+}
+
+//calculates total points given a set of players
+function calcPoints(players){
+  const arrayPlayers = Object.values(players)
+  return totalPoints = arrayPlayers.reduce((acc,currentVal) => acc + currentVal.points, 0)  
+}
 
 
 
