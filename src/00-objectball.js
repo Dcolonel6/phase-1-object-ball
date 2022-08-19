@@ -128,7 +128,7 @@ function numPointsScored(playerName) {
   return 0;
 }
 //returns shoeSize
-function shoeSize(playerName) {debugger
+function shoeSize(playerName) {
   const playerObject = returnPlayerObject(playerName)
   //check if player's object is empty
   if (Object.keys(playerObject).length) {
@@ -193,28 +193,30 @@ function playerStats(playerName){
 // First, find the player with the largest shoe size
 // Then, return that player's number of rebounds
 function bigShoeRebounds(){
-  const homeTeamPlayerBiggestShoe = findLargestAttribute(gameObject()['home']['players'])
-  const awayTeamPlayerBiggestShoe = findLargestAttribute(gameObject()['away']['players'])
+  const homeTeamPlayerbiggestAttr = findLargestAttribute(gameObject()['home']['players'])
+  const awayTeamPlayerbiggestAttr = findLargestAttribute(gameObject()['away']['players'])
   
-  if(homeTeamPlayerBiggestShoe.shoe <= awayTeamPlayerBiggestShoe.shoe){
-    return awayTeamPlayerBiggestShoe.rebounds
+  if(homeTeamPlayerbiggestAttr.shoe <= awayTeamPlayerbiggestAttr.shoe){
+    return awayTeamPlayerbiggestAttr.rebounds
   }
-  return homeTeamPlayerBiggestShoe.rebounds  
+  return homeTeamPlayerbiggestAttr.rebounds  
 
 }
-//returns the player obj with the largest shoe size
+//returns the player obj with the largest attr size
 function findLargestAttribute(players,attr='shoe'){
-  let biggestShoe = 0
-  let biggestShoePlayer = {}
+  
+  let biggestAttr = 0
+  let biggestAttrPlayer = {}
   for(const player in players){
-    if(players[player][attr] > biggestShoe){
-      biggestShoe = players[player][attr]
-      biggestShoePlayer = players[player]
+    if(players[player][attr] > biggestAttr){
+      biggestAttr = players[player][attr]
+      biggestAttrPlayer = Object.assign({name: player},players[player])
     }else{
       continue
     }
-    return biggestShoePlayer
+    
   }
+  return biggestAttrPlayer
 
 }
 
@@ -285,5 +287,13 @@ function playerWithLongestName(){
 }
 
 function doesLongNameStealATon(){
+  const playerLongestName = playerWithLongestName()
+  const combinedPlayers = Object.assign(gameObject().away.players,gameObject().home.players)
+  const playerWithMostSteals = findLargestAttribute(combinedPlayers,'steals')
+  console.log(`player with longest name ${playerLongestName}`)
+  console.log(`player with most steals ${playerWithMostSteals.name} with ${playerWithMostSteals.steals}`)
   
+  return playerWithMostSteals.name === playerLongestName ? true : false
+
 }
+
