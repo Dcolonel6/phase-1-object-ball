@@ -189,6 +189,34 @@ function collectShirtNumbers(players){
 function playerStats(playerName){
   return returnPlayerObject(playerName)
 }
+// that will return the number of rebounds associated with the player that has the largest shoe size. Break this one down into steps:
+// First, find the player with the largest shoe size
+// Then, return that player's number of rebounds
+function bigShoeRebounds(){
+  const homeTeamPlayerBiggestShoe = findLargestShoeSize(gameObject()['home']['players'])
+  const awayTeamPlayerBiggestShoe = findLargestShoeSize(gameObject()['away']['players'])
+  
+  if(homeTeamPlayerBiggestShoe.shoe <= awayTeamPlayerBiggestShoe.shoe){
+    return awayTeamPlayerBiggestShoe.rebounds
+  }
+  return homeTeamPlayerBiggestShoe.rebounds  
+
+}
+//returns the player obj with the largest shoe size
+function findLargestShoeSize(players){
+  let biggestShoe = 0
+  let biggestShoePlayer = {}
+  for(const player in players){
+    if(players[player]['shoe'] > biggestShoe){
+      biggestShoe = players[player]['shoe']
+      biggestShoePlayer = players[player]
+    }else{
+      continue
+    }
+    return biggestShoePlayer
+  }
+
+}
 
 //returns a player's object or an empty object if the player doesnt exist
 function returnPlayerObject(playerName) {
